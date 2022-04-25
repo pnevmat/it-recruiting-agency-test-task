@@ -16,6 +16,7 @@ import {
 	Select,
 } from '@mui/material';
 import {SelectChangeEvent} from '@mui/material/Select';
+import AlbumsModal from './AlbumsModal';
 import settings from '../../settings/settings';
 
 interface AlbumType {
@@ -37,6 +38,8 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 	const [cardsOnPage, setCardsOnPage] = useState<Array<AlbumType> | []>([]);
 	const [albumChoice, setAlbumChoice] = useState('All');
 	const [activePage, setActivePage] = useState(1);
+	const [openModal, setOpenModal] = useState(false);
+	const [clickedCard, setClickedCard] = useState<AlbumType | null>(null);
 
 	console.log('Cards to render: ', albums);
 	console.log('Album choice: ', albumChoice);
@@ -86,6 +89,16 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 
 	const albumchoiceHandler = (value: any) => {
 		setAlbumChoice(value);
+	};
+
+	const OpenModalHandler = (card: AlbumType) => {
+		setClickedCard(card);
+		setOpenModal(true);
+	};
+
+	const CloseModalHandler = () => {
+		setClickedCard(null);
+		setOpenModal(false);
 	};
 
 	return (
@@ -156,7 +169,8 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 									height: '100%',
 									display: 'flex',
 									flexDirection: 'column',
-								}}>
+								}}
+								onClick={() => OpenModalHandler(card)}>
 								<CardMedia
 									component="img"
 									sx={{
@@ -180,15 +194,20 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 						</Grid>
 					))}
 				</Grid>
-				<div>
-					<div>
+				<Box>
+					<Box>
 						{pages.map((page) => (
-							<div key={page} onClick={() => setActivePage(page)}>
+							<Box key={page} onClick={() => setActivePage(page)}>
 								{page}
-							</div>
+							</Box>
 						))}
-					</div>
-				</div>
+					</Box>
+				</Box>
+				<AlbumsModal
+					isOpenModal={openModal}
+					closeModal={CloseModalHandler}
+					clickedCard={clickedCard}
+				/>
 			</Container>
 		</main>
 	);
