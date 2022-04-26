@@ -14,6 +14,8 @@ import {
 	MenuItem,
 	FormControl,
 	Select,
+	Pagination,
+	styled,
 } from '@mui/material';
 import {SelectChangeEvent} from '@mui/material/Select';
 import AlbumsModal from './AlbumsModal';
@@ -36,7 +38,7 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 	const [chosenCards, setChosenCards] = useState(albums);
 	const [pages, setPages] = useState<Array<number> | []>([]);
 	const [cardsOnPage, setCardsOnPage] = useState<Array<AlbumType> | []>([]);
-	const [albumChoice, setAlbumChoice] = useState('All');
+	const [albumChoice, setAlbumChoice] = useState<string>('All');
 	const [activePage, setActivePage] = useState(1);
 	const [openModal, setOpenModal] = useState(false);
 	const [clickedCard, setClickedCard] = useState<AlbumType | null>(null);
@@ -87,8 +89,12 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 		}
 	}, [albumChoice, albums]);
 
-	const albumchoiceHandler = (value: any) => {
+	const albumChoiceHandler = (value: string) => {
 		setAlbumChoice(value);
+
+		if (value === 'All') {
+			setChosenCards(albums);
+		}
 	};
 
 	const OpenModalHandler = (card: AlbumType) => {
@@ -100,7 +106,7 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 		setClickedCard(null);
 		setOpenModal(false);
 	};
-
+	// Сделать удаление карточки картинки и поправить стили модалки
 	return (
 		<main>
 			{/* Hero unit */}
@@ -135,12 +141,12 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 						justifyContent="center">
 						<FormControl sx={{m: 1, minWidth: 80}}>
 							<InputLabel id="autowidth-label">Age</InputLabel>
-							<Select
+							<StyledSelect
 								labelId="autowidth-label"
 								id="select-autowidth"
 								value={albumChoice}
-								onChange={(e: SelectChangeEvent) =>
-									albumchoiceHandler(e.target.value)
+								onChange={(e: SelectChangeEvent<unknown>) =>
+									albumChoiceHandler(e.target.value as string)
 								}
 								autoWidth
 								label="Albums">
@@ -148,7 +154,7 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 								{selectOptions.map((option) => (
 									<MenuItem value={option}>{option}</MenuItem>
 								))}
-							</Select>
+							</StyledSelect>
 						</FormControl>
 						{/* {selectOptions.map((option) => (
 							<Button key={option} variant="contained">
@@ -164,7 +170,7 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 				<Grid container spacing={4}>
 					{cardsOnPage.map((card) => (
 						<Grid item key={card.id} xs={12} sm={6} md={4}>
-							<Card
+							<StyledCard
 								sx={{
 									height: '100%',
 									display: 'flex',
@@ -173,10 +179,6 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 								onClick={() => OpenModalHandler(card)}>
 								<CardMedia
 									component="img"
-									sx={{
-										// 16:9
-										pt: '56.25%',
-									}}
 									image={card.thumbnailUrl}
 									alt={card.title}
 								/>
@@ -186,23 +188,24 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 									</Typography>
 									<Typography>{card.title}</Typography>
 								</CardContent>
-								<CardActions>
-									<Button size="small">View</Button>
+								<StyledCardActions>
+									{/* <Button size="small">View</Button> */}
 									<Button size="small">Delete</Button>
-								</CardActions>
-							</Card>
+								</StyledCardActions>
+							</StyledCard>
 						</Grid>
 					))}
 				</Grid>
-				<Box>
-					<Box>
-						{pages.map((page) => (
-							<Box key={page} onClick={() => setActivePage(page)}>
-								{page}
-							</Box>
-						))}
-					</Box>
-				</Box>
+				<StyledStack spacing={2}>
+					<StyledPagination
+						count={pages.length}
+						size="large"
+						color="primary"
+						onChange={(e, value) => {
+							setActivePage(value);
+						}}
+					/>
+				</StyledStack>
 				<AlbumsModal
 					isOpenModal={openModal}
 					closeModal={CloseModalHandler}
@@ -212,5 +215,31 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 		</main>
 	);
 };
+
+const StyledSelect = styled(Select)({
+	minWidth: '200px',
+});
+
+const StyledCard = styled(Card)({
+	'&:hover': {
+		cursor: 'pointer',
+	},
+});
+
+const StyledCardActions = styled(CardActions)({
+	'& > button': {
+		color: '#ff2d2dbf',
+	},
+});
+
+const StyledStack = styled(Stack)({
+	marginTop: '30px',
+});
+
+const StyledPagination = styled(Pagination)({
+	'& > ul': {
+		justifyContent: 'center',
+	},
+});
 
 export default AlbumsComponent;

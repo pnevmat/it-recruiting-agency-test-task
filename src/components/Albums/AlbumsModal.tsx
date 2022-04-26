@@ -35,33 +35,28 @@ const AlbumsModal: FC<AlbumsModalProps> = ({
 					}}>
 					<CardMedia
 						component="img"
-						sx={{
-							// 16:9
-							pt: '56.25%',
-						}}
 						image={clickedCard?.url}
 						alt={clickedCard?.title}
 					/>
 				</Card>
-				{/* <Typography id="modal-modal-title" variant="h6" component="h2">
-					Text in a modal
-				</Typography>
-				<Typography id="modal-modal-description" sx={{mt: 2}}>
-					Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-				</Typography> */}
 			</Box>
 		</Modal>
 	);
 };
 
 const style = {
-	position: 'absolute' as 'absolute',
+	position: 'absolute',
 	top: '50%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
 	width: 400,
+	paddingTop: '10px !important',
+	paddingRight: '10px !important',
+	paddingBottom: '10px !important',
+	paddingLeft: '10px !important',
+	border: 'none',
+	borderRadius: '5px',
 	bgcolor: 'background.paper',
-	border: '2px solid #000',
 	boxShadow: 24,
 	p: 4,
 };
