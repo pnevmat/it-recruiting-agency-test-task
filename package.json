@@ -2,7 +2,7 @@
   "name": "it-recruiting-agency-test-task",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://pnevmat.github.io/it-recruiting-agency-test-task",
+  "homepage": "https://pnevmat.github.io/it-recruiting-agency-tt",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -23,6 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+		"predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
