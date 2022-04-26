@@ -22,6 +22,7 @@ function App() {
 	const [albumSelectOptions, setAlbumSelectOptions] = useState<
 		Array<number> | []
 	>([]);
+	console.log('Albums in app.tsx: ', albums);
 	console.log('Album buttons: ', albumSelectOptions);
 	useEffect(() => {
 		if (albums.length === 0) {
@@ -56,7 +57,11 @@ function App() {
 			{albums.length === 0 && albumSelectOptions.length === 0 ? (
 				<LoaderComponent />
 			) : (
-				<AlbumsComponent albums={albums} selectOptions={albumSelectOptions} />
+				<AlbumsComponent
+					albums={albums}
+					selectOptions={albumSelectOptions}
+					setAlbums={setAlbums}
+				/>
 			)}
 			{/* <AlbumsComponent albums={albums} /> */}
 			<FooterComponent />
