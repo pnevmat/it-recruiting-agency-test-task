@@ -82,7 +82,9 @@ const HeroComponent: FC<HeroComponentProps> = ({
 							label="Albums">
 							<MenuItem value={'All'}>All</MenuItem>
 							{selectOptions.map((option) => (
-								<MenuItem value={option}>{option}</MenuItem>
+								<MenuItem key={option} value={option}>
+									{option}
+								</MenuItem>
 							))}
 						</StyledSelect>
 					</FormControl>
