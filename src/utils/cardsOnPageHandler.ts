@@ -9,18 +9,14 @@ interface AlbumType {
 }
 
 export default function cardsOnPageHandler(activePage: number, chosenCards: Array<AlbumType>) {
-	if (!chosenCards) {
-		const cardsOnPage: any = [];
-		return cardsOnPage;
-	}
-
-	if (activePage === 1) {
+	if (activePage === 1 && chosenCards.length > 0) {
 		const cardsOnPage = chosenCards.filter((card, i) => i <= settings.cardsPerPage - 1);
 		return cardsOnPage;
-	}
-
-	if (activePage !== 1) {
+	} else if (activePage !== 1 && chosenCards.length > 0) {
 		const cardsOnPage = chosenCards.filter((card, i) => i >= (activePage - 1) * settings.cardsPerPage && i <= settings.cardsPerPage - 1 + activePage * settings.cardsPerPage - settings.cardsPerPage);
+		return cardsOnPage;
+	} else {
+		const cardsOnPage: any = [];
 		return cardsOnPage;
 	}
 }
