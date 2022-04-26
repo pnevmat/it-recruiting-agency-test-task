@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/it-recruiting-agency-tt/static/css/main.e6c13ad2.css",
-    "main.js": "/it-recruiting-agency-tt/static/js/main.a6665dbb.js",
+    "main.js": "/it-recruiting-agency-tt/static/js/main.4561552e.js",
     "static/js/787.12b22b5d.chunk.js": "/it-recruiting-agency-tt/static/js/787.12b22b5d.chunk.js",
     "index.html": "/it-recruiting-agency-tt/index.html",
     "main.e6c13ad2.css.map": "/it-recruiting-agency-tt/static/css/main.e6c13ad2.css.map",
-    "main.a6665dbb.js.map": "/it-recruiting-agency-tt/static/js/main.a6665dbb.js.map",
+    "main.4561552e.js.map": "/it-recruiting-agency-tt/static/js/main.4561552e.js.map",
     "787.12b22b5d.chunk.js.map": "/it-recruiting-agency-tt/static/js/787.12b22b5d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.a6665dbb.js"
+    "static/js/main.4561552e.js"
   ]
 }
