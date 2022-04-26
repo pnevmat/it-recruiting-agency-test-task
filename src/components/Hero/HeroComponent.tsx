@@ -88,12 +88,6 @@ const HeroComponent: FC<HeroComponentProps> = ({
 							))}
 						</StyledSelect>
 					</FormControl>
-					{/* {selectOptions.map((option) => (
-							<Button key={option} variant="contained">
-								{option}
-							</Button>
-						))} */}
-					{/* <Button variant="outlined">Secondary action</Button> */}
 				</Stack>
 			</Container>
 		</Box>

@@ -29,7 +29,7 @@ interface AlbumsComponentProps {
 	selectOptions: Array<number>;
 	setAlbums: Function;
 }
-// "https://source.unsplash.com/random" - сервис рандомной выдачи рисунка
+
 const AlbumsComponent: FC<AlbumsComponentProps> = ({
 	albums,
 	selectOptions,
@@ -43,13 +43,6 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({
 	const [openModal, setOpenModal] = useState(false);
 	const [clickedCard, setClickedCard] = useState<AlbumType | null>(null);
 
-	console.log('Cards to render: ', albums);
-	console.log('Number of pages for paginator: ', pages);
-	console.log('Album choice: ', albumChoice);
-	console.log('Chosen cards: ', chosenCards);
-	console.log('Cards on page: ', cardsOnPage);
-	console.log('Active page: ', activePage);
-
 	useEffect(() => {
 		setPages(pagesNumberHandler(chosenCards).length);
 
@@ -59,7 +52,7 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({
 	useEffect(() => {
 		if (albumChoice !== 'All') {
 			const albumNumber = albumChoice.split(' ')[1];
-			console.log('Album number: ', albumNumber);
+
 			setChosenCards(
 				albums.filter((card) => card.albumId === Number(albumNumber)),
 			);
@@ -70,7 +63,6 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({
 		const updatedAlbumsArray = albums.filter((album) => album.id !== card.id);
 		setAlbums(updatedAlbumsArray);
 		setChosenCards(updatedAlbumsArray);
-		console.log('Card is deleted: ', card);
 	};
 
 	const OpenModalHandler = (card: AlbumType) => {
@@ -85,7 +77,6 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({
 
 	return (
 		<main>
-			{/* Hero unit */}
 			<HeroComponent
 				selectOptions={selectOptions}
 				albums={albums}
@@ -93,7 +84,6 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({
 				setAlbumChoice={setAlbumChoice}
 				setChosenCards={setChosenCards}
 			/>
-			{/* End hero unit */}
 			<Container sx={{py: 8}} maxWidth="md">
 				<Grid container spacing={4}>
 					{cardsOnPage.map((card) => (
@@ -117,7 +107,6 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({
 									<Typography>{card.title}</Typography>
 								</CardContent>
 								<StyledCardActions>
-									{/* <Button size="small">View</Button> */}
 									<Button
 										size="small"
 										onClick={(e) => {

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {createTheme, ThemeProvider, CssBaseline} from '@mui/material';
 import {getAlbumsQuery} from './api/albumsApi';
+import albumsSelectOptionsHandler from './utils/albumsSelectOptionsHandler';
 import LoaderComponent from './components/Loader/LoaderComponent';
 import AppBarComponent from './components/AppBar/AppBarComponent';
 import AlbumsComponent from './components/Albums/AlbumsComponent';
@@ -22,8 +23,7 @@ function App() {
 	const [albumSelectOptions, setAlbumSelectOptions] = useState<
 		Array<number> | []
 	>([]);
-	console.log('Albums in app.tsx: ', albums);
-	console.log('Album buttons: ', albumSelectOptions);
+
 	useEffect(() => {
 		if (albums.length === 0) {
 			getAlbumsQuery().then((data) => setAlbums(data));
@@ -32,21 +32,7 @@ function App() {
 
 	useEffect(() => {
 		if (albums.length > 0 && albumSelectOptions.length === 0) {
-			let chooseOptions: any = [];
-			albums.forEach((album, i) => {
-				if (i === 0) {
-					chooseOptions = [`Album ${album.albumId}`];
-				}
-				if (
-					i > 0 &&
-					!chooseOptions.find(
-						(option: string) => `Album ${albums[i].albumId}` === option,
-					)
-				) {
-					chooseOptions.push(`Album ${albums[i].albumId}`);
-				}
-			});
-			setAlbumSelectOptions(chooseOptions);
+			setAlbumSelectOptions(albumsSelectOptionsHandler(albums));
 		}
 	}, [albumSelectOptions.length, albums.length, albums]);
 
@@ -63,7 +49,6 @@ function App() {
 					setAlbums={setAlbums}
 				/>
 			)}
-			{/* <AlbumsComponent albums={albums} /> */}
 			<FooterComponent />
 		</ThemeProvider>
 	);
