@@ -20,8 +20,6 @@ const AlbumsModal: FC<AlbumsModalProps> = ({
 	closeModal,
 	clickedCard,
 }) => {
-	console.log('Clicked card: ', clickedCard);
-
 	return (
 		<Modal
 			open={isOpenModal}
