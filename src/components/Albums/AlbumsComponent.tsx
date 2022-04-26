@@ -32,9 +32,14 @@ interface AlbumType {
 interface AlbumsComponentProps {
 	albums: Array<AlbumType>;
 	selectOptions: Array<number>;
+	setAlbums: Function;
 }
 // "https://source.unsplash.com/random" - сервис рандомной выдачи рисунка
-const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
+const AlbumsComponent: FC<AlbumsComponentProps> = ({
+	albums,
+	selectOptions,
+	setAlbums,
+}) => {
 	const [chosenCards, setChosenCards] = useState(albums);
 	const [pages, setPages] = useState<Array<number> | []>([]);
 	const [cardsOnPage, setCardsOnPage] = useState<Array<AlbumType> | []>([]);
@@ -50,6 +55,7 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 	console.log('Active page: ', activePage);
 
 	useEffect(() => {
+		// Массив страниц больше не нужен так как используетс муи пагинатор
 		let pagesArray: Array<number> = [];
 		chosenCards.forEach((card, i) => {
 			if (i <= chosenCards.length / settings.cardsPerPage + 1 && i !== 0) {
@@ -97,6 +103,13 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 		}
 	};
 
+	const deleteCardHandler = (card: AlbumType) => {
+		const updatedAlbumsArray = albums.filter((album) => album.id !== card.id);
+		setAlbums(updatedAlbumsArray);
+		setChosenCards(updatedAlbumsArray);
+		console.log('Card is deleted: ', card);
+	};
+
 	const OpenModalHandler = (card: AlbumType) => {
 		setClickedCard(card);
 		setOpenModal(true);
@@ -106,7 +119,7 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 		setClickedCard(null);
 		setOpenModal(false);
 	};
-	// Сделать удаление карточки картинки и поправить стили модалки
+	// Сделать удаление карточки картинки
 	return (
 		<main>
 			{/* Hero unit */}
@@ -190,7 +203,14 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({albums, selectOptions}) => {
 								</CardContent>
 								<StyledCardActions>
 									{/* <Button size="small">View</Button> */}
-									<Button size="small">Delete</Button>
+									<Button
+										size="small"
+										onClick={(e) => {
+											e.stopPropagation();
+											deleteCardHandler(card);
+										}}>
+										Delete
+									</Button>
 								</StyledCardActions>
 							</StyledCard>
 						</Grid>
