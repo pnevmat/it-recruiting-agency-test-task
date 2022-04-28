@@ -3,17 +3,20 @@ import {Stack, Pagination, styled} from '@mui/material';
 
 interface AlbumsPaginationProps {
 	pages: number;
+	activePage: number;
 	setActivePage: Function;
 }
 
 const AlbumsPagination: FC<AlbumsPaginationProps> = ({
 	pages,
+	activePage,
 	setActivePage,
 }) => {
 	return (
 		<StyledStack spacing={2}>
 			<StyledPagination
 				count={pages}
+				page={activePage}
 				size="large"
 				color="primary"
 				onChange={(e, value) => {

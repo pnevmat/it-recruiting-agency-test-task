@@ -75,13 +75,18 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({
 		setOpenModal(false);
 	};
 
+	const albumsChoiceHandler = (value: string) => {
+		setActivePage(1);
+		setAlbumChoice(value);
+	};
+
 	return (
 		<main>
 			<HeroComponent
 				selectOptions={selectOptions}
 				albums={albums}
 				albumChoice={albumChoice}
-				setAlbumChoice={setAlbumChoice}
+				setAlbumChoice={albumsChoiceHandler}
 				setChosenCards={setChosenCards}
 			/>
 			<Container sx={{py: 8}} maxWidth="md">
@@ -120,7 +125,11 @@ const AlbumsComponent: FC<AlbumsComponentProps> = ({
 						</Grid>
 					))}
 				</Grid>
-				<AlbumsPagination pages={pages} setActivePage={setActivePage} />
+				<AlbumsPagination
+					pages={pages}
+					activePage={activePage}
+					setActivePage={setActivePage}
+				/>
 				<AlbumsModal
 					isOpenModal={openModal}
 					closeModal={CloseModalHandler}
